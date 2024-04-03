@@ -50,8 +50,10 @@ export const processMessage = (message: string): string[] => {
   messageStr = messageStr.replace(/no. /g, "");
   // replace all ac, acct, account with ac
   messageStr = messageStr.replace(/\bac\b|\bacct\b|\baccount\b/g, "ac");
+  // replace ₹ with rs.
+  messageStr = messageStr.replace(/₹(?=\d+)/g, "rs. ");
   // replace all 'by' with 'rs. '
-  messageStr = messageStr.replace(/by(?=\w)/g, "rs. ");
+  messageStr = messageStr.replace(/by(?=\s*\d+)/g, "rs. ");
   // replace all 'rs' with 'rs. '
   messageStr = messageStr.replace(/rs(?=\w)/g, "rs. ");
   // replace all 'rs ' with 'rs. '
