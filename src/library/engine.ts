@@ -7,6 +7,7 @@ import {
   ITransactionInfo,
   TMessageType,
   TTransactionType,
+  TMessageDetails,
 } from "./interface";
 import extractMerchantInfo from "./merchant";
 import { getProcessedMessage, padCurrencyValue, processMessage } from "./utils";
@@ -43,10 +44,10 @@ export const getTransactionAmount = (message: TMessageType): string => {
 
 export const getTransactionType = (message: TMessageType): TTransactionType => {
   const creditPattern =
-    /(?:credited|credit|deposited|added|received|refund|repayment)/gi;
+    /(?:credited|credit|deposited|received\srs|added|received|refund|repayment)/gi;
   const debitPattern = /(?:debited|debit|deducted)/gi;
   const miscPattern =
-    /(?:payment|spent|paid|used\s+at|charged|transaction\son|transaction\sfee|tran|booked|purchased|sent\s+to|purchase\s+of)/gi;
+    /(?:payment|spent|paid|used\s+at|charged|sent\srs|transaction\son|transaction\sfee|tran|booked|purchased|sent\s+to|purchase\s+of)/gi;
 
   const messageStr = typeof message !== "string" ? message.join(" ") : message;
 
@@ -63,6 +64,22 @@ export const getTransactionType = (message: TMessageType): TTransactionType => {
   return null;
 };
 
+export const getTransactionDetails = (message: TMessageType): TMessageDetails => {
+  const processedMessage = getProcessedMessage(message);
+  let index = processedMessage.indexOf("to");
+  if (index === -1) {
+    index = processedMessage.indexOf("from");
+    if (index === -1) {
+      return null
+    }
+  }
+  const details = message[index + 1]
+  const ignore = ["kotak", "your", "bank", "sbi", "canara"]
+  if (ignore.includes(details))
+    return null
+  return details
+}
+
 export const getTransactionInfo = (message: string): ITransactionInfo => {
   if (!message || typeof message !== "string") {
     return {
@@ -77,6 +94,7 @@ export const getTransactionInfo = (message: string): ITransactionInfo => {
         amount: null,
         merchant: null,
         referenceNo: null,
+        detail: null
       },
     };
   }
@@ -101,6 +119,7 @@ export const getTransactionInfo = (message: string): ITransactionInfo => {
       IBalanceKeyWordsType.OUTSTANDING,
     );
   }
+  const detail = getTransactionDetails(processedMessage)
 
   const { merchant, referenceNo } = extractMerchantInfo(message);
 
@@ -115,6 +134,7 @@ export const getTransactionInfo = (message: string): ITransactionInfo => {
       amount: transactionAmount,
       merchant: merchant,
       referenceNo: referenceNo,
+      detail: detail
     },
   };
 };

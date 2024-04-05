@@ -17,12 +17,14 @@ export interface IBalance {
     outstanding: string | null;
 }
 export type TMessageType = string | string[];
+export type TMessageDetails = string | null;
 export type TTransactionType = "debit" | "credit" | null;
 export interface ITransaction {
     type: TTransactionType | null;
     amount: string | null;
     referenceNo: string | null;
     merchant: string | null;
+    detail: string | null;
 }
 export interface ITransactionInfo {
     account: IAccountInfo;

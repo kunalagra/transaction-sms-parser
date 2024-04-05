@@ -21,6 +21,7 @@ export interface IBalance {
 }
 
 export type TMessageType = string | string[];
+export type TMessageDetails = string | null;
 export type TTransactionType = "debit" | "credit" | null;
 
 export interface ITransaction {
@@ -28,6 +29,7 @@ export interface ITransaction {
   amount: string | null;
   referenceNo: string | null;
   merchant: string | null;
+  detail: string | null;
 }
 
 export interface ITransactionInfo {
