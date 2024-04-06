@@ -1,5 +1,5 @@
 var i = /* @__PURE__ */ ((t) => (t.CARD = "CARD", t.WALLET = "WALLET", t.ACCOUNT = "ACCOUNT", t))(i || {}), u = /* @__PURE__ */ ((t) => (t.AVAILABLE = "AVAILABLE", t.OUTSTANDING = "OUTSTANDING", t))(u || {});
-const A = [
+const N = [
   "avbl bal",
   "available balance",
   "available limit",
@@ -15,7 +15,7 @@ const A = [
   "bal",
   "avl lmt",
   "available"
-], y = ["outstanding"], L = ["paytm", "simpl", "lazypay", "amazon_pay"], N = ["upi", "ref no", "upi ref", "upi ref no", "refno", "transaction number"], m = [
+], y = ["outstanding"], C = ["paytm", "simpl", "lazypay", "amazon_pay"], m = ["upi", "ref no", "upi ref", "upi ref no", "refno", "transaction number"], h = [
   {
     regex: /credit\scard/g,
     word: "c_card",
@@ -46,44 +46,44 @@ const A = [
     word: "one_card",
     type: i.CARD
   }
-], T = (t) => !Number.isNaN(Number(t)), v = (t) => {
-  const [e, l] = [t[0], t[t.length - 1]];
-  let n = Number.isNaN(Number(l)) ? t.slice(0, -1) : t;
+], L = (t) => !Number.isNaN(Number(t)), T = (t) => {
+  const [e, s] = [t[0], t[t.length - 1]];
+  let n = Number.isNaN(Number(s)) ? t.slice(0, -1) : t;
   return n = Number.isNaN(Number(e)) ? n.slice(1) : n, n;
 }, O = (t) => {
   const e = t.replace("ac", "");
   return Number.isNaN(Number(e)) ? "" : e;
-}, x = (t) => {
+}, w = (t) => {
   let e = t.toLowerCase();
-  return e = e.replace(/-/g, ""), e = e.replace(/!/g, ""), e = e.replace(/:/g, " "), e = e.replace(/\//g, ""), e = e.replace(/=/g, " "), e = e.replace(/[{}]/g, " "), e = e.replace(/\n/g, " "), e = e.replace(/\r/g, " "), e = e.replace(/ending /g, ""), e = e.replace(/x|[*]/g, ""), e = e.replace(/is /g, ""), e = e.replace(/with /g, ""), e = e.replace(/no. /g, ""), e = e.replace(/\bac\b|\bacct\b|\baccount\b/g, "ac"), e = e.replace(/₹(?=\s*\d+)/g, "rs. "), e = e.replace(/by(?=\s*\d+)/g, "rs. "), e = e.replace(/rs(?=\w)/g, "rs. "), e = e.replace(/rs /g, "rs. "), e = e.replace(/inr(?=\w)/g, "rs. "), e = e.replace(/inr /g, "rs. "), e = e.replace(/rs. /g, "rs."), e = e.replace(/rs.(?=\w)/g, "rs. "), e = e.replace(/debited/g, " debited "), e = e.replace(/credited/g, " credited "), m.forEach((l) => {
-    e = e.replace(l.regex, l.word);
-  }), e.split(" ").filter((l) => l !== "");
-}, p = (t) => {
+  return e = e.replace(/-/g, ""), e = e.replace(/!/g, ""), e = e.replace(/:/g, " "), e = e.replace(/\//g, ""), e = e.replace(/=/g, " "), e = e.replace(/[{}]/g, " "), e = e.replace(/\n/g, " "), e = e.replace(/\r/g, " "), e = e.replace(/ending /g, ""), e = e.replace(/x|[*]/g, ""), e = e.replace(/is /g, ""), e = e.replace(/with /g, ""), e = e.replace(/no. /g, ""), e = e.replace(/\bac\b|\bacct\b|\baccount\b/g, "ac"), e = e.replace(/₹(?=\s*\d+)/g, "rs. "), e = e.replace(/by(?=\s*\d+)/g, "rs. "), e = e.replace(/rs(?=\w)/g, "rs. "), e = e.replace(/rs /g, "rs. "), e = e.replace(/inr(?=\w)/g, "rs. "), e = e.replace(/inr /g, "rs. "), e = e.replace(/rs. /g, "rs."), e = e.replace(/rs.(?=\w)/g, "rs. "), e = e.replace(/debited/g, " debited "), e = e.replace(/credited/g, " credited "), h.forEach((s) => {
+    e = e.replace(s.regex, s.word);
+  }), e.split(" ").filter((s) => s !== "");
+}, g = (t) => {
   let e = [];
-  return typeof t == "string" ? e = x(t) : e = t, e;
-}, b = (t) => {
-  const [e, l] = t.split(".");
-  return `${e}.${(l ?? "").padEnd(2, "0")}`;
-}, E = (t, e, l = 1) => {
+  return typeof t == "string" ? e = w(t) : e = t, e;
+}, f = (t) => {
+  const [e, s] = t.split(".");
+  return `${e}.${(s ?? "").padEnd(2, "0")}`;
+}, E = (t, e, s = 1) => {
   const r = t.split(e, 2)[1];
   if (r) {
     const a = /[^0-9a-zA-Z]+/gi;
-    return r.trim().split(a, l).join(" ");
+    return r.trim().split(a, s).join(" ");
   }
   return "";
 }, I = (t) => {
   let e = "";
-  const l = t.findIndex(
-    (r) => r === "card" || m.filter((a) => a.type === i.CARD).some((a) => a.word === r ? (e = a.word, !0) : !1)
+  const s = t.findIndex(
+    (r) => r === "card" || h.filter((a) => a.type === i.CARD).some((a) => a.word === r ? (e = a.word, !0) : !1)
   ), n = { type: null, name: null, number: null };
-  return l !== -1 ? (n.number = t[l + 1], n.type = i.CARD, Number.isNaN(Number(n.number)) ? {
+  return s !== -1 ? (n.number = t[s + 1], n.type = i.CARD, Number.isNaN(Number(n.number)) ? {
     type: e ? n.type : null,
     name: e,
     number: null
   } : n) : { type: null, name: null, number: null };
-}, h = (t) => {
-  const e = p(t);
-  let l = -1, n = {
+}, A = (t) => {
+  const e = g(t);
+  let s = -1, n = {
     type: null,
     name: null,
     number: null
@@ -91,123 +91,307 @@ const A = [
   for (const [r, a] of e.entries())
     if (a === "ac")
       if (r + 1 < e.length) {
-        const s = v(
+        const l = T(
           e[r + 1]
         );
-        if (Number.isNaN(Number(s)))
+        if (Number.isNaN(Number(l)))
           continue;
-        l = r, n.type = i.ACCOUNT, n.number = s;
+        s = r, n.type = i.ACCOUNT, n.number = l;
         break;
       } else
         continue;
     else if (a.includes("ac")) {
-      const s = O(a);
-      if (s === "")
+      const l = O(a);
+      if (l === "")
         continue;
-      l = r, n.type = i.ACCOUNT, n.number = s;
+      s = r, n.type = i.ACCOUNT, n.number = l;
       break;
     }
-  if (l === -1 && (n = I(e)), !n.type) {
-    const r = e.find((a) => L.includes(a));
+  if (s === -1 && (n = I(e)), !n.type) {
+    const r = e.find((a) => C.includes(a));
     r && (n.type = i.WALLET, n.name = r);
   }
   if (!n.type) {
-    const r = m.filter((a) => a.type === i.ACCOUNT).find((a) => e.includes(a.word));
+    const r = h.filter((a) => a.type === i.ACCOUNT).find((a) => e.includes(a.word));
     n.type = (r == null ? void 0 : r.type) ?? null, n.name = (r == null ? void 0 : r.word) ?? null;
   }
   return n.number && n.number.length > 4 && (n.number = n.number.slice(-4)), n;
-}, R = (t, e, l) => {
-  let n = "", r = !1, a = 0, s = "", c = t;
-  for (; c < l; ) {
-    if (s = e[c], s >= "0" && s <= "9")
-      r = !0, n += s;
+}, R = (t, e, s) => {
+  let n = "", r = !1, a = 0, l = "", o = t;
+  for (; o < s; ) {
+    if (l = e[o], l >= "0" && l <= "9")
+      r = !0, n += l;
     else if (r) {
-      if (s === ".") {
+      if (l === ".") {
         if (a === 1)
           break;
-        n += s, a += 1;
-      } else if (s !== ",")
+        n += l, a += 1;
+      } else if (l !== ",")
         break;
     }
-    c += 1;
+    o += 1;
   }
   return n;
 }, B = (t, e = u.AVAILABLE) => {
-  const n = `(${(e === u.AVAILABLE ? A : y).join("|")})`.replace("/", "\\/"), r = "([\\d]+\\.[\\d]+|[\\d]+)";
-  let a = new RegExp(`${n}\\s*${r}`, "gi"), s = t.match(a);
-  if (s && s.length > 0) {
-    const c = s[0].split(" ").pop();
-    return Number.isNaN(Number(c)) ? "" : c;
+  const n = `(${(e === u.AVAILABLE ? N : y).join("|")})`.replace("/", "\\/"), r = "([\\d]+\\.[\\d]+|[\\d]+)";
+  let a = new RegExp(`${n}\\s*${r}`, "gi"), l = t.match(a);
+  if (l && l.length > 0) {
+    const o = l[0].split(" ").pop();
+    return Number.isNaN(Number(o)) ? "" : o;
   }
-  if (a = new RegExp(`${r}\\s*${n}`, "gi"), s = t.match(a), s && s.length > 0) {
-    const c = s[0].split(" ")[0];
-    return Number.isNaN(Number(c)) ? "" : c;
+  if (a = new RegExp(`${r}\\s*${n}`, "gi"), l = t.match(a), l && l.length > 0) {
+    const o = l[0].split(" ")[0];
+    return Number.isNaN(Number(o)) ? "" : o;
   }
   return null;
-}, f = (t, e = u.AVAILABLE) => {
-  const n = p(t).join(" ");
+}, b = (t, e = u.AVAILABLE) => {
+  const n = g(t).join(" ");
   let r = -1, a = "";
-  const s = e === u.AVAILABLE ? A : y;
-  for (const g of s)
-    if (r = n.indexOf(g), r !== -1) {
-      r += g.length;
+  const l = e === u.AVAILABLE ? N : y;
+  for (const p of l)
+    if (r = n.indexOf(p), r !== -1) {
+      r += p.length;
       break;
     } else
       continue;
-  let c = r, o = -1, d = n.substr(c, 3);
-  for (c += 3; c < n.length; ) {
-    if (d = d.slice(1), d += n[c], d === "rs.") {
-      o = c + 2;
+  let o = r, c = -1, d = n.substr(o, 3);
+  for (o += 3; o < n.length; ) {
+    if (d = d.slice(1), d += n[o], d === "rs.") {
+      c = o + 2;
       break;
     }
-    c += 1;
+    o += 1;
   }
-  return o === -1 ? (a = B(n) ?? "", a ? b(a) : null) : (a = R(o, n, n.length), a ? b(a) : null);
-}, w = (t) => {
-  const e = p(t), l = e.join(" "), n = {
+  return c === -1 ? (a = B(n) ?? "", a ? f(a) : null) : (a = R(c, n, n.length), a ? f(a) : null);
+}, x = (t) => {
+  const e = g(t), s = e.join(" "), n = {
     merchant: null,
     referenceNo: null
   };
   if (e.includes("vpa")) {
     const a = e.indexOf("vpa");
     if (a < e.length - 1) {
-      const s = e[a + 1], [c] = s.replaceAll(/\(|\)/gi, " ").split(" ");
-      n.merchant = c;
+      const l = e[a + 1], [o] = l.replaceAll(/\(|\)/gi, " ").split(" ");
+      n.merchant = o;
     }
   }
   let r = "";
-  for (let a = 0; a < N.length; a += 1) {
-    const s = N[a];
-    l.indexOf(s) > 0 && (r = s);
+  for (let a = 0; a < m.length; a += 1) {
+    const l = m[a];
+    s.indexOf(l) > 0 && (r = l);
   }
   if (r) {
-    const a = E(l, r);
-    if (T(a))
+    const a = E(s, r);
+    if (L(a))
       n.referenceNo = a;
     else if (n.merchant) {
-      const [s] = a.split(/[^0-9]/gi).sort((c, o) => o.length - c.length)[0];
-      s && (n.referenceNo = s);
+      const [l] = a.split(/[^0-9]/gi).sort((o, c) => c.length - o.length)[0];
+      l && (n.referenceNo = l);
     } else
       n.merchant = a;
   }
   return n;
 }, D = (t) => {
-  const l = p(t).indexOf("rs.");
-  if (l === -1)
+  const s = g(t).indexOf("rs.");
+  if (s === -1)
     return "";
-  let n = t[l + 1];
-  return n = n.replace(/,/g, ""), Number.isNaN(Number(n)) ? (n = t[l + 2], n = n == null ? void 0 : n.replace(/,/g, ""), Number.isNaN(Number(n)) ? "" : b(n)) : b(n);
+  let n = t[s + 1];
+  return n = n.replace(/,/g, ""), Number.isNaN(Number(n)) ? (n = t[s + 2], n = n == null ? void 0 : n.replace(/,/g, ""), Number.isNaN(Number(n)) ? "" : f(n)) : f(n);
 }, M = (t) => {
-  const e = /(?:credited|credit|deposited|received\srs|added|received|refund|repayment)/gi, l = /(?:debited|debit|deducted)/gi, n = /(?:payment|spent|paid|used\s+at|charged|sent\srs|transaction\son|transaction\sfee|tran|booked|purchased|sent\s+to|purchase\s+of)/gi, r = typeof t != "string" ? t.join(" ") : t;
-  return l.test(r) ? "debit" : e.test(r) ? "credit" : n.test(r) ? "debit" : null;
-}, k = (t) => {
-  const e = p(t);
-  let l = e.indexOf("to");
-  if (l === -1 && (l = e.indexOf("from"), l === -1))
-    return null;
-  const n = t[l + 1];
-  return ["kotak", "your", "bank", "sbi", "canara"].includes(n) ? null : n;
+  const e = /(?:credited|credit|deposited|received\srs|added|received|refund|repayment)/gi, s = /(?:debited|debit|deducted)/gi, n = /(?:payment|spent|paid|used\s+at|charged|sent\srs|transaction\son|transaction\sfee|tran|booked|purchased|sent\s+to|purchase\s+of)/gi, r = typeof t != "string" ? t.join(" ") : t;
+  return s.test(r) ? "debit" : e.test(r) ? "credit" : n.test(r) ? "debit" : null;
 }, S = (t) => {
+  const e = g(t);
+  let s = e.indexOf("to");
+  if (s === -1 && (s = e.indexOf("from"), s === -1))
+    return null;
+  const n = t[s + 1];
+  return [
+    "i",
+    "me",
+    "my",
+    "myself",
+    "we",
+    "our",
+    "ours",
+    "ourselves",
+    "you",
+    "you're",
+    "you've",
+    "you'll",
+    "you'd",
+    "your",
+    "yours",
+    "yourself",
+    "yourselves",
+    "he",
+    "him",
+    "his",
+    "himself",
+    "she",
+    "she's",
+    "her",
+    "hers",
+    "herself",
+    "it",
+    "it's",
+    "its",
+    "itself",
+    "they",
+    "them",
+    "their",
+    "theirs",
+    "themselves",
+    "what",
+    "which",
+    "who",
+    "whom",
+    "this",
+    "that",
+    "that'll",
+    "these",
+    "those",
+    "am",
+    "is",
+    "are",
+    "was",
+    "were",
+    "be",
+    "been",
+    "being",
+    "have",
+    "has",
+    "had",
+    "having",
+    "do",
+    "does",
+    "did",
+    "doing",
+    "a",
+    "an",
+    "the",
+    "and",
+    "but",
+    "if",
+    "or",
+    "because",
+    "as",
+    "until",
+    "while",
+    "of",
+    "at",
+    "by",
+    "for",
+    "with",
+    "about",
+    "against",
+    "between",
+    "into",
+    "through",
+    "during",
+    "before",
+    "after",
+    "above",
+    "below",
+    "to",
+    "from",
+    "up",
+    "down",
+    "in",
+    "out",
+    "on",
+    "off",
+    "over",
+    "under",
+    "again",
+    "further",
+    "then",
+    "once",
+    "here",
+    "there",
+    "when",
+    "where",
+    "why",
+    "how",
+    "all",
+    "any",
+    "both",
+    "each",
+    "few",
+    "more",
+    "most",
+    "other",
+    "some",
+    "such",
+    "no",
+    "nor",
+    "not",
+    "only",
+    "own",
+    "same",
+    "so",
+    "than",
+    "too",
+    "very",
+    "s",
+    "t",
+    "can",
+    "will",
+    "just",
+    "don",
+    "don't",
+    "should",
+    "should've",
+    "now",
+    "d",
+    "ll",
+    "m",
+    "o",
+    "re",
+    "ve",
+    "y",
+    "ain",
+    "aren",
+    "aren't",
+    "couldn",
+    "couldn't",
+    "didn",
+    "didn't",
+    "doesn",
+    "doesn't",
+    "hadn",
+    "hadn't",
+    "hasn",
+    "hasn't",
+    "haven",
+    "haven't",
+    "isn",
+    "isn't",
+    "ma",
+    "mightn",
+    "mightn't",
+    "mustn",
+    "mustn't",
+    "needn",
+    "needn't",
+    "shan",
+    "shan't",
+    "shouldn",
+    "shouldn't",
+    "wasn",
+    "wasn't",
+    "weren",
+    "weren't",
+    "won",
+    "won't",
+    "wouldn",
+    "wouldn't",
+    "kotak",
+    "canara",
+    "sbi",
+    "au"
+  ].includes(n) ? null : n;
+}, k = (t) => {
   if (!t || typeof t != "string")
     return {
       account: {
@@ -224,29 +408,29 @@ const A = [
         detail: null
       }
     };
-  const e = x(t), l = h(e), n = f(
+  const e = w(t), s = A(e), n = b(
     e,
     u.AVAILABLE
-  ), r = D(e), s = [n, r, l.number].filter(
-    (C) => C !== ""
-  ).length >= 2 ? M(e) : null, c = { available: n, outstanding: null };
-  l && l.type === i.CARD && (c.outstanding = f(
+  ), r = D(e), l = [n, r, s.number].filter(
+    (v) => v !== ""
+  ).length >= 2 ? M(e) : null, o = { available: n, outstanding: null };
+  s && s.type === i.CARD && (o.outstanding = b(
     e,
     u.OUTSTANDING
   ));
-  const o = k(e), { merchant: d, referenceNo: g } = w(t);
+  const c = S(e), { merchant: d, referenceNo: p } = x(t);
   return {
-    account: l,
-    balance: c,
+    account: s,
+    balance: o,
     transaction: {
-      type: s,
+      type: l,
       amount: r,
       merchant: d,
-      referenceNo: g,
-      detail: o
+      referenceNo: p,
+      detail: c
     }
   };
-}, V = h, U = f, K = w;
+}, V = A, U = b, K = x;
 export {
   i as IAccountType,
   u as IBalanceKeyWordsType,
@@ -254,7 +438,7 @@ export {
   U as getBalanceInfo,
   K as getMerchantInfo,
   D as getTransactionAmount,
-  k as getTransactionDetails,
-  S as getTransactionInfo,
+  S as getTransactionDetails,
+  k as getTransactionInfo,
   M as getTransactionType
 };
