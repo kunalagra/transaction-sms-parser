@@ -44,7 +44,7 @@ const extractMerchantInfo = (message: TMessageType) => {
         transactionDetails.referenceNo = longestNumeric;
       }
     } else {
-      transactionDetails.merchant = nextWord;
+      transactionDetails.referenceNo = nextWord;
     }
   }
 

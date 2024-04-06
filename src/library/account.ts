@@ -52,6 +52,15 @@ const getAccount = (message: TMessageType): IAccountInfo => {
     number: null,
   };
 
+  if (!account.type) {
+    const wallet = processedMessage.find((word) => {
+      return wallets.includes(word);
+    });
+    if (wallet) {
+      account.type = IAccountType.WALLET;
+      account.name = wallet;
+    }
+  }
   for (const [index, word] of processedMessage.entries()) {
     if (word === "ac") {
       if (index + 1 < processedMessage.length) {
@@ -92,15 +101,7 @@ const getAccount = (message: TMessageType): IAccountInfo => {
   }
 
   // Check for wallets
-  if (!account.type) {
-    const wallet = processedMessage.find((word) => {
-      return wallets.includes(word);
-    });
-    if (wallet) {
-      account.type = IAccountType.WALLET;
-      account.name = wallet;
-    }
-  }
+
 
   // Check for special accounts
   if (!account.type) {
