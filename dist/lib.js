@@ -55,13 +55,13 @@ const N = [
   return Number.isNaN(Number(e)) ? "" : e;
 }, w = (t) => {
   let e = t.toLowerCase();
-  return e = e.replace(/-/g, ""), e = e.replace(/!/g, ""), e = e.replace(/:/g, " "), e = e.replace(/\//g, ""), e = e.replace(/=/g, " "), e = e.replace(/[{}]/g, " "), e = e.replace(/\n/g, " "), e = e.replace(/\r/g, " "), e = e.replace(/ending /g, ""), e = e.replace(/x|[*]/g, ""), e = e.replace(/is /g, ""), e = e.replace(/with /g, ""), e = e.replace(/\bac\b|\bacc\b|\bacct\b|\baccount\b/g, "ac"), e = e.replace(/no. /g, ""), e = e.replace(/(ac) no\b/g, "$1"), e = e.replace(/₹(?=\s*\d+)/g, "rs. "), e = e.replace(/by(?=\s*\d+)/g, "rs. "), e = e.replace(/rs(?=\w)/g, "rs. "), e = e.replace(/rs /g, "rs. "), e = e.replace(/inr(?=\w)/g, "rs. "), e = e.replace(/inr /g, "rs. "), e = e.replace(/rs. /g, "rs."), e = e.replace(/rs.(?=\w)/g, "rs. "), e = e.replace(/debited/g, " debited "), e = e.replace(/credited/g, " credited "), h.forEach((s) => {
+  return e = e.replace(/-/g, ""), e = e.replace(/!/g, ""), e = e.replace(/:/g, " "), e = e.replace(/\//g, ""), e = e.replace(/=/g, " "), e = e.replace(/[{}]/g, " "), e = e.replace(/\n/g, " "), e = e.replace(/\r/g, " "), e = e.replace(/ending /g, ""), e = e.replace(/x|[*]/g, ""), e = e.replace(/\bis\b /g, ""), e = e.replace(/with /g, ""), e = e.replace(/\bac\b|\bacc\b|\bacct\b|\baccount\b/g, "ac"), e = e.replace(/no. /g, ""), e = e.replace(/(ac) no\b/g, "$1"), e = e.replace(/₹(?=\s*\d+)/g, "rs. "), e = e.replace(/by(?=\s*\d+)/g, "rs. "), e = e.replace(/rs(?=\w)/g, "rs. "), e = e.replace(/rs /g, "rs. "), e = e.replace(/inr(?=\w)/g, "rs. "), e = e.replace(/inr /g, "rs. "), e = e.replace(/rs. /g, "rs."), e = e.replace(/rs.(?=\w)/g, "rs. "), e = e.replace(/debited/g, " debited "), e = e.replace(/credited/g, " credited "), h.forEach((s) => {
     e = e.replace(s.regex, s.word);
   }), e.split(" ").filter((s) => s !== "");
 }, b = (t) => {
   let e = [];
   return typeof t == "string" ? e = w(t) : e = t, e;
-}, g = (t) => {
+}, f = (t) => {
   const [e, s] = t.split(".");
   return `${e}.${(s ?? "").padEnd(2, "0")}`;
 }, E = (t, e, s = 1) => {
@@ -88,10 +88,6 @@ const N = [
     name: null,
     number: null
   };
-  if (!n.type) {
-    const r = e.find((a) => C.includes(a));
-    r && (n.type = c.WALLET, n.name = r);
-  }
   for (const [r, a] of e.entries())
     if (a === "ac")
       if (r + 1 < e.length) {
@@ -112,6 +108,10 @@ const N = [
       break;
     }
   if (s === -1 && (n = I(e)), !n.type) {
+    const r = e.find((a) => C.includes(a));
+    r && (n.type = c.WALLET, n.name = r);
+  }
+  if (!n.type) {
     const r = h.filter((a) => a.type === c.ACCOUNT).find((a) => e.includes(a.word));
     n.type = (r == null ? void 0 : r.type) ?? null, n.name = (r == null ? void 0 : r.word) ?? null;
   }
@@ -144,7 +144,7 @@ const N = [
     return Number.isNaN(Number(l)) ? "" : l;
   }
   return null;
-}, f = (t, e = u.AVAILABLE) => {
+}, g = (t, e = u.AVAILABLE) => {
   const n = b(t).join(" ");
   let r = -1, a = "";
   const o = e === u.AVAILABLE ? N : y;
@@ -162,7 +162,7 @@ const N = [
     }
     l += 1;
   }
-  return i === -1 ? (a = B(n) ?? "", a ? g(a) : null) : (a = R(i, n, n.length), a ? g(a) : null);
+  return i === -1 ? (a = B(n) ?? "", a ? f(a) : null) : (a = R(i, n, n.length), a ? f(a) : null);
 }, x = (t) => {
   const e = b(t), s = e.join(" "), n = {
     merchant: null,
@@ -196,7 +196,7 @@ const N = [
   if (s === -1)
     return "";
   let n = t[s + 1];
-  return n = n.replace(/,/g, ""), Number.isNaN(Number(n)) ? (n = t[s + 2], n = n == null ? void 0 : n.replace(/,/g, ""), Number.isNaN(Number(n)) ? "" : g(n)) : g(n);
+  return n = n.replace(/,/g, ""), Number.isNaN(Number(n)) ? (n = t[s + 2], n = n == null ? void 0 : n.replace(/,/g, ""), Number.isNaN(Number(n)) ? "" : f(n)) : f(n);
 }, M = (t) => {
   const e = /(?:credited|credit|deposited|received\srs|added|received|refund|repayment)/gi, s = /(?:debited|debit|deducted)/gi, n = /(?:payment|spent|paid|used\s+at|charged|sent\srs|transaction\son|transaction\sfee|tran|booked|purchased|sent\s+to|purchase\s+of)/gi, r = typeof t != "string" ? t.join(" ") : t;
   return s.test(r) ? "debit" : e.test(r) ? "credit" : n.test(r) ? "debit" : null;
@@ -207,10 +207,9 @@ const N = [
     e.indexOf("by"),
     e.indexOf("from")
   ];
-  for (let n = 0; n < s.length; n++)
-    if (s[n] != -1) {
-      const r = t[s[n] + 1];
-      if ([
+  for (let r = 0; r < s.length; r++)
+    if (s[r] != -1) {
+      const a = t[s[r] + 1], o = [
         "i",
         "me",
         "my",
@@ -229,6 +228,8 @@ const N = [
         "yourself",
         "yourselves",
         "ac",
+        "sms",
+        "call",
         "it",
         "it's",
         "its",
@@ -375,9 +376,11 @@ const N = [
         "canara",
         "sbi",
         "au"
-      ].includes(r))
+      ];
+      var n = /^\d{10}$/;
+      if (n.test(a) || o.includes(a))
         continue;
-      return r;
+      return a;
     }
   return null;
 }, k = (t) => {
@@ -397,13 +400,13 @@ const N = [
         detail: null
       }
     };
-  const e = w(t), s = A(e), n = f(
+  const e = w(t), s = A(e), n = g(
     e,
     u.AVAILABLE
   ), r = D(e), o = [n, r, s.number].filter(
     (v) => v !== ""
   ).length >= 2 ? M(e) : null, l = { available: n, outstanding: null };
-  s && s.type === c.CARD && (l.outstanding = f(
+  s && s.type === c.CARD && (l.outstanding = g(
     e,
     u.OUTSTANDING
   ));
@@ -419,7 +422,7 @@ const N = [
       detail: i
     }
   };
-}, V = A, U = f, $ = x;
+}, V = A, U = g, $ = x;
 export {
   c as IAccountType,
   u as IBalanceKeyWordsType,

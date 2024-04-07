@@ -76,7 +76,7 @@ export const getTransactionDetails = (message: TMessageType): TMessageDetails =>
       const details = message[indices[i] + 1];
       const ignore = ['i', 'me', 'my', 'myself', 'we', 'our', 'ours',
         'ourselves', 'you', "you're", "you've", "you'll", "you'd", 'your', 'yours', 'yourself',
-        'yourselves', 'ac',
+        'yourselves', 'ac', 'sms', 'call',
         'it', "it's", 'its', 'itself', 'they', 'them', 'their', 'theirs', 'themselves',
         'what', 'which', 'who', 'whom', 'this', 'that', "that'll", 'these', 'those', 'am', 'is', 'are',
         'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'having', 'do', 'does', 'did', 'doing',
@@ -89,7 +89,8 @@ export const getTransactionDetails = (message: TMessageType): TMessageDetails =>
         'ain', 'aren', "aren't", 'couldn', "couldn't", 'didn', "didn't", 'doesn', "doesn't",
         'hadn', "hadn't", 'hasn', "hasn't", 'haven', "haven't", 'isn', "isn't",
         'wasn', "wasn't", 'weren', "weren't", 'won', "won't", 'wouldn', "wouldn't", "kotak", "canara", "sbi", "au"];
-
+      var regex = /^\d{10}$/;
+      if (regex.test(details)) continue
       if (ignore.includes(details)) continue;
       return details;
     }

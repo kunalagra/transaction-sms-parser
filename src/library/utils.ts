@@ -43,7 +43,7 @@ export const processMessage = (message: string): string[] => {
   // // remove 'is' 'with'
   // message = message.replace(/\bis\b|\bwith\b/g, '');
   // replace 'is'
-  messageStr = messageStr.replace(/is /g, "");
+  messageStr = messageStr.replace(/\bis\b /g, "");
   // replace 'with'
   messageStr = messageStr.replace(/with /g, "");
   // replace all ac, acct, account with ac
