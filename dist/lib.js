@@ -15,7 +15,7 @@ const N = [
   "bal",
   "avl lmt",
   "available"
-], y = ["outstanding"], C = ["paytm", "simpl", "lazypay", "amazon_pay"], m = ["upi", "ref no", "upi ref", "upi ref no", "refno", "transaction number", "utr", "ref"], h = [
+], y = ["outstanding"], C = ["paytm", "simpl", "lazypay", "amazon_pay"], m = ["ref", "upi", "ref no", "upi ref", "upi ref no", "refno", "transaction number", "utr"], h = [
   {
     regex: /credit\scard/g,
     word: "c_card",
