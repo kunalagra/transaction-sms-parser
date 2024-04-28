@@ -45,7 +45,7 @@ export const getTransactionAmount = (message: TMessageType): string => {
 export const getTransactionType = (message: TMessageType): TTransactionType => {
   const creditPattern =
     /(?:credited|credit|deposited|received\srs|added|received|refund|repayment)/gi;
-  const debitPattern = /(?:debited|debit|deducted)/gi;
+  const debitPattern = /(?:debited|debit|deducted|sent)/gi;
   const miscPattern =
     /(?:payment|spent|paid|used\s+at|charged|sent\srs|transaction\son|transaction\sfee|tran|booked|purchased|sent\s+to|purchase\s+of)/gi;
 

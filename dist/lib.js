@@ -15,7 +15,7 @@ const N = [
   "bal",
   "avl lmt",
   "available"
-], y = ["outstanding"], C = ["paytm", "simpl", "lazypay", "amazon_pay"], m = ["upi", "ref no", "upi ref", "upi ref no", "refno", "transaction number", "utr"], h = [
+], y = ["outstanding"], C = ["paytm", "simpl", "lazypay", "amazon_pay"], m = ["upi", "ref no", "upi ref", "upi ref no", "refno", "transaction number", "utr", "ref"], h = [
   {
     regex: /credit\scard/g,
     word: "c_card",
@@ -61,7 +61,7 @@ const N = [
 }, b = (t) => {
   let e = [];
   return typeof t == "string" ? e = w(t) : e = t, e;
-}, f = (t) => {
+}, p = (t) => {
   const [e, s] = t.split(".");
   return `${e}.${(s ?? "").padEnd(2, "0")}`;
 }, E = (t, e, s = 1) => {
@@ -148,9 +148,9 @@ const N = [
   const n = b(t).join(" ");
   let r = -1, a = "";
   const o = e === u.AVAILABLE ? N : y;
-  for (const p of o)
-    if (r = n.indexOf(p), r !== -1) {
-      r += p.length;
+  for (const f of o)
+    if (r = n.indexOf(f), r !== -1) {
+      r += f.length;
       break;
     } else
       continue;
@@ -162,7 +162,7 @@ const N = [
     }
     l += 1;
   }
-  return i === -1 ? (a = B(n) ?? "", a ? f(a) : null) : (a = R(i, n, n.length), a ? f(a) : null);
+  return i === -1 ? (a = B(n) ?? "", a ? p(a) : null) : (a = R(i, n, n.length), a ? p(a) : null);
 }, x = (t) => {
   const e = b(t), s = e.join(" "), n = {
     merchant: null,
@@ -196,9 +196,9 @@ const N = [
   if (s === -1)
     return "";
   let n = t[s + 1];
-  return n = n.replace(/,/g, ""), Number.isNaN(Number(n)) ? (n = t[s + 2], n = n == null ? void 0 : n.replace(/,/g, ""), Number.isNaN(Number(n)) ? "" : f(n)) : f(n);
+  return n = n.replace(/,/g, ""), Number.isNaN(Number(n)) ? (n = t[s + 2], n = n == null ? void 0 : n.replace(/,/g, ""), Number.isNaN(Number(n)) ? "" : p(n)) : p(n);
 }, M = (t) => {
-  const e = /(?:credited|credit|deposited|received\srs|added|received|refund|repayment)/gi, s = /(?:debited|debit|deducted)/gi, n = /(?:payment|spent|paid|used\s+at|charged|sent\srs|transaction\son|transaction\sfee|tran|booked|purchased|sent\s+to|purchase\s+of)/gi, r = typeof t != "string" ? t.join(" ") : t;
+  const e = /(?:credited|credit|deposited|received\srs|added|received|refund|repayment)/gi, s = /(?:debited|debit|deducted|sent)/gi, n = /(?:payment|spent|paid|used\s+at|charged|sent\srs|transaction\son|transaction\sfee|tran|booked|purchased|sent\s+to|purchase\s+of)/gi, r = typeof t != "string" ? t.join(" ") : t;
   return s.test(r) ? "debit" : e.test(r) ? "credit" : n.test(r) ? "debit" : null;
 }, S = (t) => {
   const e = b(t);
@@ -411,7 +411,7 @@ const N = [
     e,
     u.OUTSTANDING
   ));
-  const i = S(e), { merchant: d, referenceNo: p } = x(t);
+  const i = S(e), { merchant: d, referenceNo: f } = x(t);
   return {
     account: s,
     balance: l,
@@ -419,7 +419,7 @@ const N = [
       type: o,
       amount: r,
       merchant: d,
-      referenceNo: p,
+      referenceNo: f,
       detail: i
     }
   };
