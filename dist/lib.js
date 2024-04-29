@@ -218,6 +218,7 @@ const N = [
         "our",
         "ours",
         "rs.",
+        "u",
         "ourselves",
         "you",
         "you're",

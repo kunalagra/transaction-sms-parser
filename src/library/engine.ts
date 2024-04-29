@@ -74,7 +74,7 @@ export const getTransactionDetails = (message: TMessageType): TMessageDetails =>
   for (let i = 0; i < indices.length; i++) {
     if (indices[i] != -1) {
       const details = message[indices[i] + 1];
-      const ignore = ['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'rs.',
+      const ignore = ['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'rs.', 'u',
         'ourselves', 'you', "you're", "you've", "you'll", "you'd", 'your', 'yours', 'yourself',
         'yourselves', 'ac', 'sms', 'call',
         'it', "it's", 'its', 'itself', 'they', 'them', 'their', 'theirs', 'themselves',
