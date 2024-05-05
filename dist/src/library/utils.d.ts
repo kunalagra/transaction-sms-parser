@@ -1,4 +1,5 @@
-import { TMessageType } from "./interface";
+import { TMessageType } from './interface';
+
 export declare const isNumber: (val: unknown) => boolean;
 export declare const trimLeadingAndTrailingChars: (str: string) => string;
 export declare const extractBondedAccountNo: (accountNo: string) => string;

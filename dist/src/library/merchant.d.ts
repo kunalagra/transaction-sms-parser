@@ -1,4 +1,5 @@
-import { TMessageType } from "./interface";
+import { TMessageType } from './interface';
+
 declare const extractMerchantInfo: (message: TMessageType) => {
     merchant: string | null;
     referenceNo: string | null;
