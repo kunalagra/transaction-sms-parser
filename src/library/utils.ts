@@ -39,7 +39,8 @@ export const processMessage = (message: string): string[] => {
   // remove 'ending'
   messageStr = messageStr.replace(/ending /g, "");
   // replace 'x'
-  messageStr = messageStr.replace(/x|[*]/g, "");
+  messageStr = messageStr.replace(/(?<![a-wyzA-WYZ])x|[*]/g, "");
+
   // // remove 'is' 'with'
   // message = message.replace(/\bis\b|\bwith\b/g, '');
   // replace 'is'
