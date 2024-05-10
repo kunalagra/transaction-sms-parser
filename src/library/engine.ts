@@ -69,8 +69,10 @@ export const getTransactionDetails = (message: TMessageType): TMessageDetails =>
   let indices = [
     processedMessage.indexOf("to"),
     processedMessage.indexOf("by"),
-    processedMessage.indexOf("from")
+    processedMessage.indexOf("from"),
+    processedMessage.indexOf("at")
   ];
+
   for (let i = 0; i < indices.length; i++) {
     if (indices[i] != -1) {
       const details = message[indices[i] + 1];

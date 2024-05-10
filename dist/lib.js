@@ -205,7 +205,8 @@ const N = [
   let s = [
     e.indexOf("to"),
     e.indexOf("by"),
-    e.indexOf("from")
+    e.indexOf("from"),
+    e.indexOf("at")
   ];
   for (let r = 0; r < s.length; r++)
     if (s[r] != -1) {
