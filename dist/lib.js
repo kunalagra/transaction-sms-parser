@@ -15,7 +15,7 @@ const N = [
   "bal",
   "avl lmt",
   "available"
-], y = ["outstanding"], C = ["paytm", "simpl", "lazypay", "amazon_pay"], h = ["ref", "upi", "ref no", "upi ref", "upi ref no", "refno", "transaction number", "utr"], m = [
+], y = ["outstanding"], C = ["paytm", "simpl", "lazypay", "amazon_pay"], m = ["ref", "upi", "ref no", "upi ref", "upi ref no", "refno", "transaction number", "utr"], h = [
   {
     regex: /credit\scard/g,
     word: "c_card",
@@ -55,7 +55,7 @@ const N = [
   return Number.isNaN(Number(e)) ? "" : e;
 }, w = (t) => {
   let e = t.toLowerCase();
-  return e = e.replace(/-/g, ""), e = e.replace(/!/g, ""), e = e.replace(/:/g, " "), e = e.replace(/\//g, ""), e = e.replace(/=/g, " "), e = e.replace(/[{}]/g, " "), e = e.replace(/\n/g, " "), e = e.replace(/\r/g, " "), e = e.replace(/ending /g, ""), e = e.replace(new RegExp("(?<![a-wyzA-WYZ])x|[*]", "g"), ""), e = e.replace(/\bis\b /g, ""), e = e.replace(/with /g, ""), e = e.replace(/\bac\b|\bacc\b|\bacct\b|\baccount\b/g, "ac"), e = e.replace(/no. /g, ""), e = e.replace(/(ac) no\b/g, "$1"), e = e.replace(/₹(?=\s*\d+)/g, "rs. "), e = e.replace(/by(?=\s*\d+)/g, "rs. "), e = e.replace(/rs(?=\w)/g, "rs. "), e = e.replace(/rs /g, "rs. "), e = e.replace(/inr(?=\w)/g, "rs. "), e = e.replace(/inr /g, "rs. "), e = e.replace(/rs. /g, "rs."), e = e.replace(/rs.(?=\w)/g, "rs. "), e = e.replace(/debited/g, " debited "), e = e.replace(/credited/g, " credited "), m.forEach((s) => {
+  return e = e.replace(/-/g, ""), e = e.replace(/!/g, ""), e = e.replace(/:/g, " "), e = e.replace(/\//g, ""), e = e.replace(/=/g, " "), e = e.replace(/[{}]/g, " "), e = e.replace(/\n/g, " "), e = e.replace(/\r/g, " "), e = e.replace(/ending /g, ""), e = e.replace(new RegExp("(?<![a-wyzA-WYZ])x|[*]", "g"), ""), e = e.replace(/\bis\b /g, ""), e = e.replace(/with /g, ""), e = e.replace(/\bac\b|\bacc\b|\bacct\b|\baccount\b/g, "ac"), e = e.replace(/no. /g, ""), e = e.replace(/(ac) no\b/g, "$1"), e = e.replace(/₹(?=\s*\d+)/g, "rs. "), e = e.replace(/by(?=\s*\d+)/g, "rs. "), e = e.replace(/rs(?=\w)/g, "rs. "), e = e.replace(/rs /g, "rs. "), e = e.replace(/inr(?=\w)/g, "rs. "), e = e.replace(/inr /g, "rs. "), e = e.replace(/rs. /g, "rs."), e = e.replace(/rs.(?=\w)/g, "rs. "), e = e.replace(/debited/g, " debited "), e = e.replace(/credited/g, " credited "), h.forEach((s) => {
     e = e.replace(s.regex, s.word);
   }), e.split(" ").filter((s) => s !== "");
 }, b = (t) => {
@@ -74,7 +74,7 @@ const N = [
 }, I = (t) => {
   let e = "";
   const s = t.findIndex(
-    (r) => r === "card" || m.filter((a) => a.type === c.CARD).some((a) => a.word === r ? (e = a.word, !0) : !1)
+    (r) => r === "card" || h.filter((a) => a.type === c.CARD).some((a) => a.word === r ? (e = a.word, !0) : !1)
   ), n = { type: null, name: null, number: null };
   return s !== -1 ? (n.number = t[s + 1], n.type = c.CARD, Number.isNaN(Number(n.number)) ? {
     type: e ? n.type : null,
@@ -112,7 +112,7 @@ const N = [
     r && (n.type = c.WALLET, n.name = r);
   }
   if (!n.type) {
-    const r = m.filter((a) => a.type === c.ACCOUNT).find((a) => e.includes(a.word));
+    const r = h.filter((a) => a.type === c.ACCOUNT).find((a) => e.includes(a.word));
     n.type = (r == null ? void 0 : r.type) ?? null, n.name = (r == null ? void 0 : r.word) ?? null;
   }
   return n.number && n.number.length > 4 && (n.number = n.number.slice(-4)), n;
@@ -176,8 +176,8 @@ const N = [
     }
   }
   let r = "";
-  for (let a = 0; a < h.length; a += 1) {
-    const o = h[a];
+  for (let a = 0; a < m.length; a += 1) {
+    const o = m[a];
     s.indexOf(o) > 0 && (r = o);
   }
   if (r) {
@@ -198,7 +198,7 @@ const N = [
   let n = t[s + 1];
   return n = n.replace(/,/g, ""), Number.isNaN(Number(n)) ? (n = t[s + 2], n = n == null ? void 0 : n.replace(/,/g, ""), Number.isNaN(Number(n)) ? "" : p(n)) : p(n);
 }, M = (t) => {
-  const e = /(?:credited|credit|deposited|received\srs|added|received|refund|repayment|removed\sfrom)/gi, s = /(?:debited|debit|deducted|sent)/gi, n = /(?:payment|spent|paid|used\s+at|charged|sent\srs|transaction\son|transaction\sfee|tran|booked|purchased|sent\s+to|purchase\s+of)/gi, r = typeof t != "string" ? t.join(" ") : t;
+  const e = /(?:credited|credit|deposited|received\srs|added|received|refund|repayment)/gi, s = /\b(?:debited|debit|deducted|sent)\b/gi, n = /(?:payment|spent|paid|used\s+at|charged|sent\srs|transaction\son|transaction\sfee|tran|booked|purchased|sent\s+to|purchase\s+of)/gi, r = typeof t != "string" ? t.join(" ") : t;
   return s.test(r) ? "debit" : e.test(r) ? "credit" : n.test(r) ? "debit" : null;
 }, S = (t) => {
   const e = b(t);
