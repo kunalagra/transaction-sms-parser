@@ -20,6 +20,8 @@ export const extractBondedAccountNo = (accountNo: string): string => {
 export const processMessage = (message: string): string[] => {
   // convert to lower case
   let messageStr = message.toLowerCase();
+  // remove double whitespace
+  messageStr = messageStr.replace(/\s{2,}/g, ' ');
   // remove '-'
   messageStr = messageStr.replace(/-/g, "");
   // remove '!'
@@ -51,6 +53,8 @@ export const processMessage = (message: string): string[] => {
   messageStr = messageStr.replace(/\bac\b|\bacc\b|\bacct\b|\baccount\b/g, "ac");
   // remove 'no.'
   messageStr = messageStr.replace(/no. /g, "");
+  // handle where ac is joined with acc number
+  messageStr = messageStr.replace(/(ac)(x+)(\d+)/g, "$1 $2$3");
   // replace 'ac no.'
   messageStr = messageStr.replace(/(ac) no\b/g, "$1");
   // replace ₹ with rs.

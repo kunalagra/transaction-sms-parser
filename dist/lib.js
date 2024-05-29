@@ -55,13 +55,13 @@ const N = [
   return Number.isNaN(Number(e)) ? "" : e;
 }, w = (t) => {
   let e = t.toLowerCase();
-  return e = e.replace(/-/g, ""), e = e.replace(/!/g, ""), e = e.replace(/:/g, " "), e = e.replace(/\//g, ""), e = e.replace(/=/g, " "), e = e.replace(/[{}]/g, " "), e = e.replace(/\n/g, " "), e = e.replace(/\r/g, " "), e = e.replace(/ending /g, ""), e = e.replace(new RegExp("(?<![a-wyzA-WYZ])x|[*]", "g"), ""), e = e.replace(/\bis\b /g, ""), e = e.replace(/with /g, ""), e = e.replace(/\bac\b|\bacc\b|\bacct\b|\baccount\b/g, "ac"), e = e.replace(/no. /g, ""), e = e.replace(/(ac) no\b/g, "$1"), e = e.replace(/₹(?=\s*\d+)/g, "rs. "), e = e.replace(/by(?=\s*\d+)/g, "rs. "), e = e.replace(/rs(?=\w)/g, "rs. "), e = e.replace(/rs /g, "rs. "), e = e.replace(/inr(?=\w)/g, "rs. "), e = e.replace(/inr /g, "rs. "), e = e.replace(/rs. /g, "rs."), e = e.replace(/rs.(?=\w)/g, "rs. "), e = e.replace(/debited/g, " debited "), e = e.replace(/credited/g, " credited "), h.forEach((s) => {
+  return e = e.replace(/\s{2,}/g, " "), e = e.replace(/-/g, ""), e = e.replace(/!/g, ""), e = e.replace(/:/g, " "), e = e.replace(/\//g, ""), e = e.replace(/=/g, " "), e = e.replace(/[{}]/g, " "), e = e.replace(/\n/g, " "), e = e.replace(/\r/g, " "), e = e.replace(/ending /g, ""), e = e.replace(new RegExp("(?<![a-wyzA-WYZ])x|[*]", "g"), ""), e = e.replace(/\bis\b /g, ""), e = e.replace(/with /g, ""), e = e.replace(/\bac\b|\bacc\b|\bacct\b|\baccount\b/g, "ac"), e = e.replace(/no. /g, ""), e = e.replace(/(ac)(x+)(\d+)/g, "$1 $2$3"), e = e.replace(/(ac) no\b/g, "$1"), e = e.replace(/₹(?=\s*\d+)/g, "rs. "), e = e.replace(/by(?=\s*\d+)/g, "rs. "), e = e.replace(/rs(?=\w)/g, "rs. "), e = e.replace(/rs /g, "rs. "), e = e.replace(/inr(?=\w)/g, "rs. "), e = e.replace(/inr /g, "rs. "), e = e.replace(/rs. /g, "rs."), e = e.replace(/rs.(?=\w)/g, "rs. "), e = e.replace(/debited/g, " debited "), e = e.replace(/credited/g, " credited "), h.forEach((s) => {
     e = e.replace(s.regex, s.word);
   }), e.split(" ").filter((s) => s !== "");
 }, b = (t) => {
   let e = [];
   return typeof t == "string" ? e = w(t) : e = t, e;
-}, p = (t) => {
+}, f = (t) => {
   const [e, s] = t.split(".");
   return `${e}.${(s ?? "").padEnd(2, "0")}`;
 }, E = (t, e, s = 1) => {
@@ -91,20 +91,20 @@ const N = [
   for (const [r, a] of e.entries())
     if (a === "ac")
       if (r + 1 < e.length) {
-        const o = T(
+        const l = T(
           e[r + 1]
         );
-        if (Number.isNaN(Number(o)))
+        if (Number.isNaN(Number(l)))
           continue;
-        s = r, n.type = c.ACCOUNT, n.number = o;
+        s = r, n.type = c.ACCOUNT, n.number = l;
         break;
       } else
         continue;
     else if (a.includes("ac")) {
-      const o = O(a);
-      if (o === "")
+      const l = O(a);
+      if (l === "")
         continue;
-      s = r, n.type = c.ACCOUNT, n.number = o;
+      s = r, n.type = c.ACCOUNT, n.number = l;
       break;
     }
   if (s === -1 && (n = I(e)), !n.type) {
@@ -117,52 +117,52 @@ const N = [
   }
   return n.number && n.number.length > 4 && (n.number = n.number.slice(-4)), n;
 }, R = (t, e, s) => {
-  let n = "", r = !1, a = 0, o = "", l = t;
-  for (; l < s; ) {
-    if (o = e[l], o >= "0" && o <= "9")
-      r = !0, n += o;
+  let n = "", r = !1, a = 0, l = "", o = t;
+  for (; o < s; ) {
+    if (l = e[o], l >= "0" && l <= "9")
+      r = !0, n += l;
     else if (r) {
-      if (o === ".") {
+      if (l === ".") {
         if (a === 1)
           break;
-        n += o, a += 1;
-      } else if (o !== ",")
+        n += l, a += 1;
+      } else if (l !== ",")
         break;
     }
-    l += 1;
+    o += 1;
   }
   return n;
 }, B = (t, e = u.AVAILABLE) => {
   const n = `(${(e === u.AVAILABLE ? N : y).join("|")})`.replace("/", "\\/"), r = "([\\d]+\\.[\\d]+|[\\d]+)";
-  let a = new RegExp(`${n}\\s*${r}`, "gi"), o = t.match(a);
-  if (o && o.length > 0) {
-    const l = o[0].split(" ").pop();
-    return Number.isNaN(Number(l)) ? "" : l;
+  let a = new RegExp(`${n}\\s*${r}`, "gi"), l = t.match(a);
+  if (l && l.length > 0) {
+    const o = l[0].split(" ").pop();
+    return Number.isNaN(Number(o)) ? "" : o;
   }
-  if (a = new RegExp(`${r}\\s*${n}`, "gi"), o = t.match(a), o && o.length > 0) {
-    const l = o[0].split(" ")[0];
-    return Number.isNaN(Number(l)) ? "" : l;
+  if (a = new RegExp(`${r}\\s*${n}`, "gi"), l = t.match(a), l && l.length > 0) {
+    const o = l[0].split(" ")[0];
+    return Number.isNaN(Number(o)) ? "" : o;
   }
   return null;
 }, g = (t, e = u.AVAILABLE) => {
   const n = b(t).join(" ");
   let r = -1, a = "";
-  const o = e === u.AVAILABLE ? N : y;
-  for (const f of o)
-    if (r = n.indexOf(f), r !== -1) {
-      r += f.length;
+  const l = e === u.AVAILABLE ? N : y;
+  for (const p of l)
+    if (r = n.indexOf(p), r !== -1) {
+      r += p.length;
       break;
     } else
       continue;
-  let l = r, i = -1, d = n.substr(l, 3);
-  for (l += 3; l < n.length; ) {
-    if (d = d.slice(1), d += n[l], d === "rs.") {
-      i = l + 2;
+  let o = r, i = -1, d = n.substr(o, 3);
+  for (o += 3; o < n.length; ) {
+    if (d = d.slice(1), d += n[o], d === "rs.") {
+      i = o + 2;
       break;
     }
-    l += 1;
+    o += 1;
   }
-  return i === -1 ? (a = B(n) ?? "", a ? p(a) : null) : (a = R(i, n, n.length), a ? p(a) : null);
+  return i === -1 ? (a = B(n) ?? "", a ? f(a) : null) : (a = R(i, n, n.length), a ? f(a) : null);
 }, x = (t) => {
   const e = b(t), s = e.join(" "), n = {
     merchant: null,
@@ -171,22 +171,22 @@ const N = [
   if (e.includes("vpa")) {
     const a = e.indexOf("vpa");
     if (a < e.length - 1) {
-      const o = e[a + 1], [l] = o.replaceAll(/\(|\)/gi, " ").split(" ");
-      n.merchant = l;
+      const l = e[a + 1], [o] = l.replaceAll(/\(|\)/gi, " ").split(" ");
+      n.merchant = o;
     }
   }
   let r = "";
   for (let a = 0; a < m.length; a += 1) {
-    const o = m[a];
-    s.indexOf(o) > 0 && (r = o);
+    const l = m[a];
+    s.indexOf(l) > 0 && (r = l);
   }
   if (r) {
     const a = E(s, r);
     if (L(a))
       n.referenceNo = a;
     else if (n.merchant) {
-      const [o] = a.split(/[^0-9]/gi).sort((l, i) => i.length - l.length)[0];
-      o && (n.referenceNo = o);
+      const [l] = a.split(/[^0-9]/gi).sort((o, i) => i.length - o.length)[0];
+      l && (n.referenceNo = l);
     } else
       n.referenceNo = a;
   }
@@ -196,11 +196,11 @@ const N = [
   if (s === -1)
     return "";
   let n = t[s + 1];
-  return n = n.replace(/,/g, ""), Number.isNaN(Number(n)) ? (n = t[s + 2], n = n == null ? void 0 : n.replace(/,/g, ""), Number.isNaN(Number(n)) ? "" : p(n)) : p(n);
+  return n = n.replace(/,/g, ""), Number.isNaN(Number(n)) ? (n = t[s + 2], n = n == null ? void 0 : n.replace(/,/g, ""), Number.isNaN(Number(n)) ? "" : f(n)) : f(n);
 }, M = (t) => {
   const e = /(?:credited|credit|deposited|received\srs|added|received|refund|repayment)/gi, s = /\b(?:debited|debit|deducted|sent)\b/gi, n = /(?:payment|spent|paid|used\s+at|charged|sent\srs|transaction\son|transaction\sfee|tran|booked|purchased|sent\s+to|purchase\s+of)/gi, r = typeof t != "string" ? t.join(" ") : t;
-  return s.test(r) ? "debit" : e.test(r) ? "credit" : n.test(r) ? "debit" : null;
-}, S = (t) => {
+  return e.test(r) ? "credit" : s.test(r) || n.test(r) ? "debit" : null;
+}, $ = (t) => {
   const e = b(t);
   let s = [
     e.indexOf("to"),
@@ -210,7 +210,7 @@ const N = [
   ];
   for (let r = 0; r < s.length; r++)
     if (s[r] != -1) {
-      const a = t[s[r] + 1], o = [
+      const a = t[s[r] + 1], l = [
         "i",
         "me",
         "my",
@@ -381,12 +381,12 @@ const N = [
         "au"
       ];
       var n = /^\d{10}$/;
-      if (n.test(a) || o.includes(a))
+      if (n.test(a) || l.includes(a))
         continue;
       return a;
     }
   return null;
-}, k = (t) => {
+}, S = (t) => {
   if (!t || typeof t != "string")
     return {
       account: {
@@ -406,34 +406,34 @@ const N = [
   const e = w(t), s = A(e), n = g(
     e,
     u.AVAILABLE
-  ), r = D(e), o = [n, r, s.number].filter(
+  ), r = D(e), l = [n, r, s.number].filter(
     (v) => v !== ""
-  ).length >= 2 ? M(e) : null, l = { available: n, outstanding: null };
-  s && s.type === c.CARD && (l.outstanding = g(
+  ).length >= 2 ? M(e) : null, o = { available: n, outstanding: null };
+  s && s.type === c.CARD && (o.outstanding = g(
     e,
     u.OUTSTANDING
   ));
-  const i = S(e), { merchant: d, referenceNo: f } = x(t);
+  const i = $(e), { merchant: d, referenceNo: p } = x(t);
   return {
     account: s,
-    balance: l,
+    balance: o,
     transaction: {
-      type: o,
+      type: l,
       amount: r,
       merchant: d,
-      referenceNo: f,
+      referenceNo: p,
       detail: i
     }
   };
-}, V = A, U = g, $ = x;
+}, k = A, V = g, U = x;
 export {
   c as IAccountType,
   u as IBalanceKeyWordsType,
-  V as getAccountInfo,
-  U as getBalanceInfo,
-  $ as getMerchantInfo,
+  k as getAccountInfo,
+  V as getBalanceInfo,
+  U as getMerchantInfo,
   D as getTransactionAmount,
-  S as getTransactionDetails,
-  k as getTransactionInfo,
+  $ as getTransactionDetails,
+  S as getTransactionInfo,
   M as getTransactionType
 };

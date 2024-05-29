@@ -51,11 +51,11 @@ export const getTransactionType = (message: TMessageType): TTransactionType => {
 
   const messageStr = typeof message !== "string" ? message.join(" ") : message;
 
-  if (debitPattern.test(messageStr)) {
-    return "debit";
-  }
   if (creditPattern.test(messageStr)) {
     return "credit";
+  }
+  if (debitPattern.test(messageStr)) {
+    return "debit";
   }
   if (miscPattern.test(messageStr)) {
     return "debit";
